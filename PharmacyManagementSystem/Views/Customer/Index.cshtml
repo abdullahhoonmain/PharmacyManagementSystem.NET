@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Customer>
+@{
+    ViewData["Title"] = "Customers";
+}
+<div class="container mt-4">
+    <h2>Customers</h2>
+    <a href="@Url.Action("Create")" class="btn btn-success mb-3">Add Customer</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.CusId</td>
+                    <td>@customer.CusName</td>
+                    <td>@customer.Phone</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = customer.CusId })" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", new { id = customer.CusId })" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

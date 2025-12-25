@@ -1,0 +1,140 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid mt-4">
+    <h1 class="mb-4">Pharmacy Management Dashboard</h1>
+
+    <div class="row">
+        <!-- Stats Cards -->
+        <div class="col-md-2">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5>Bills</h5>
+                    <p style="font-size: 24px;">@ViewBag.TotalBills</p>
+                </div>
+            </div>
+        </div>
+
+        @if (ViewBag.AccessLevel == 1 || ViewBag.AccessLevel == 2)
+        {
+            <div class="col-md-2">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5>Medicines</h5>
+                        <p style="font-size: 24px;">@ViewBag.TotalMedicines</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="col-md-2">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5>Customers</h5>
+                    <p style="font-size: 24px;">@ViewBag.TotalCustomers</p>
+                </div>
+            </div>
+        </div>
+
+        @if (ViewBag.AccessLevel == 1)
+        {
+            <div class="col-md-2">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5>Employees</h5>
+                        <p style="font-size: 24px;">@ViewBag.TotalEmployees</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5>Suppliers</h5>
+                        <p style="font-size: 24px;">@ViewBag.TotalSuppliers</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.AccessLevel == 1 || ViewBag.AccessLevel == 2)
+        {
+            <div class="col-md-2">
+                <div class="card bg-secondary text-white">
+                    <div class="card-body">
+                        <h5>Low Stock</h5>
+                        <p style="font-size: 24px;">@ViewBag.LowStockCount</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- AI Chat Assistant -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>AI Medicine Assistant</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <input type="text" id="aiQuestion" class="form-control mb-2"
+                               placeholder="Ask: low stock, hot selling, critical, stock status, today's sales..." />
+                        <button class="btn btn-info w-100" onclick="askAI()">Ask AI</button>
+                    </div>
+                    <div id="aiResponse" class="mt-3" style="min-height: 100px; white-space: pre-wrap;
+                                                              background: #f5f5f5; padding: 10px;
+                                                              border-radius: 5px; display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Navigation -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Quick Links</h5>
+                </div>
+                <div class="card-body">
+                    <a href="@Url.Action("Index", "Bill")" class="btn btn-primary w-100 mb-2">Bills</a>
+                    @if (ViewBag.AccessLevel == 1 || ViewBag.AccessLevel == 2)
+                    {
+                        <a href="@Url.Action("Index", "Medicine")" class="btn btn-success w-100 mb-2">Medicines</a>
+                    }
+                    <a href="@Url.Action("Index", "Customer")" class="btn btn-info w-100 mb-2">Customers</a>
+                    @if (ViewBag.AccessLevel == 1)
+                    {
+                        <a href="@Url.Action("Index", "Employee")" class="btn btn-warning w-100 mb-2">Employees</a>
+                        <a href="@Url.Action("Index", "Supplier")" class="btn btn-danger w-100">Suppliers</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function askAI() {
+        const question = document.getElementById('aiQuestion').value;
+        if (!question.trim()) return;
+
+        fetch('/api/ai/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: question })
+        })
+        .then(r => r.json())
+        .then(data => {
+            const responseDiv = document.getElementById('aiResponse');
+            responseDiv.textContent = data.answer;
+            responseDiv.style.display = 'block';
+        })
+        .catch(err => {
+            document.getElementById('aiResponse').textContent = 'Error: ' + err;
+            document.getElementById('aiResponse').style.display = 'block';
+        });
+    }
+</script>

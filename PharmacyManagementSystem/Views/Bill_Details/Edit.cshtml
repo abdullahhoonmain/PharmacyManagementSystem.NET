@@ -1,0 +1,22 @@
+﻿@model BillDetails
+@{ ViewData["Title"] = "Edit Item"; }
+<div class="container mt-4">
+    <h2>Edit Item</h2>
+    <form method="post">
+        <input type="hidden" name="BillItemId" value="@Model.BillItemId" />
+        <div class="form-group mb-3">
+            <label>Medicine</label>
+            <select name="MedId" class="form-control" required>
+                @foreach (var medicine in (IEnumerable<Medicine>)ViewBag.Medicines) {
+<option value="@medicine.MedicineId" selected="@(medicine.MedicineId == Model.MedId)">@medicine.Name</option>
+                }
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label>Quantity</label>
+            <input type="number" name="Quantity" class="form-control" value="@Model.Quantity" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="@Url.Action("BillItems", new { billId = Model.BillId })" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

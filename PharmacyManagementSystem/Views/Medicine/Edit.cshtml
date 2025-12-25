@@ -1,0 +1,53 @@
+﻿@model Medicine
+@{
+    ViewData["Title"] = "Edit Medicine";
+}
+<div class="container mt-4">
+    <h2>Edit Medicine</h2>
+    <form method="post">
+        <input type="hidden" name="MedicineId" value="@Model.MedicineId" />
+        <div class="form-group mb-3">
+            <label>Medicine Name</label>
+            <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Category</label>
+            <select name="Category" class="form-control" required>
+                <option value="">Select Category</option>
+                <option value="Tablet" selected="@(Model.Category == "Tablet")">Tablet</option>
+                <option value="Capsule" selected="@(Model.Category == "Capsule")">Capsule</option>
+                <option value="Injection" selected="@(Model.Category == "Injection")">Injection</option>
+                <option value="Syrup" selected="@(Model.Category == "Syrup")">Syrup</option>
+                <option value="Machine" selected="@(Model.Category == "Machine")">Machine</option>
+                <option value="Cosmetics" selected="@(Model.Category == "Cosmetics")">Cosmetics</option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label>Batch No</label>
+            <input type="text" name="BatchNo" class="form-control" value="@Model.BatchNo" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Expiry Date</label>
+            <input type="date" name="ExpiryDate" class="form-control" value="@Model.ExpiryDate.ToString("yyyy-MM-dd")" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Purchase Price</label>
+            <input type="number" name="PurchasePrice" step="0.01" class="form-control" value="@Model.PurchasePrice" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Sale Price</label>
+            <input type="number" name="SalePrice" step="0.01" class="form-control" value="@Model.SalePrice" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Quantity</label>
+            <input type="number" name="Quantity" class="form-control" value="@Model.Quantity" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Supplier ID</label>
+            <input type="number" name="SupplierId" class="form-control" value="@Model.SupplierId" />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+

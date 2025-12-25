@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h3>💊 Pharmacy Login</h3>
+                </div>
+                <div class="card-body">
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="alert alert-danger">
+                            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                            {
+                                <p>@error.ErrorMessage</p>
+                            }
+                        </div>
+                    }
+                    <form method="post">
+                        <div class="form-group mb-3">
+                            <label>Username</label>
+                            <input type="text" name="username" class="form-control" required />
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Password</label>
+                            <input type="password" name="password" class="form-control" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <hr />
+                    <p class="text-center">Don't have account? <a href="@Url.Action("Signup")">Sign Up</a></p>
+                </div>
+            </div>
+            <div class="alert alert-info mt-3">
+                <strong>Test Users:</strong><br>
+                Admin (1): admin / 123<br>
+                Pharmacist (2): pharma / 123<br>
+                Cashier (3): cashier / 123
+            </div>
+        </div>
+    </div>
+</div>

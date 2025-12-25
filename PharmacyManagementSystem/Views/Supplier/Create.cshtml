@@ -1,0 +1,27 @@
+﻿@model Supplier
+@{
+    ViewData["Title"] = "Add Supplier";
+}
+<div class="container mt-4">
+    <h2>Add New Supplier</h2>
+    <form method="post">
+        <div class="form-group mb-3">
+            <label>Supplier Name</label>
+            <input type="text" name="SupplierName" class="form-control" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Contact Person</label>
+            <input type="text" name="ContactPerson" class="form-control" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Phone</label>
+            <input type="text" name="Phone" class="form-control" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Address</label>
+            <input type="text" name="Address" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

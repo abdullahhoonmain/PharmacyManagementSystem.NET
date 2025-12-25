@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Bill>
+@{
+    ViewData["Title"] = "Bills";
+}
+<div class="container mt-4">
+    <h2>Bills</h2>
+    <a href="@Url.Action("Create")" class="btn btn-success mb-3">Create Bill</a>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Customer</th>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bill in Model)
+            {
+                <tr>
+                    <td>@bill.BillId</td>
+                    <td>@bill.Customer?.CusName</td>
+                    <td>@bill.Employee?.Name</td>
+                    <td>@bill.BillDate.ToString("dd-MM-yyyy")</td>
+                    <td>@bill.TotalAmount</td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = bill.BillId })" class="btn btn-sm btn-info">View</a>
+                        <a href="@Url.Action("Delete", new { id = bill.BillId })" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

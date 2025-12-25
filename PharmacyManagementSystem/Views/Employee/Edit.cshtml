@@ -1,0 +1,29 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+<div class="container mt-4">
+    <h2>Edit Employee</h2>
+    <form method="post">
+        <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
+        <div class="form-group mb-3">
+            <label>Name</label>
+            <input type="text" name="Name" class="form-control" value="@Model.Name" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Role</label>
+            <select name="Role" class="form-control" required>
+                <option value="">Select Role</option>
+                <option value="Admin" selected="@(Model.Role == "Admin")">Admin</option>
+                <option value="Pharmacist" selected="@(Model.Role == "Pharmacist")">Pharmacist</option>
+                <option value="Cashier" selected="@(Model.Role == "Cashier")">Cashier</option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label>Phone</label>
+            <input type="text" name="Phone" class="form-control" value="@Model.Phone" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

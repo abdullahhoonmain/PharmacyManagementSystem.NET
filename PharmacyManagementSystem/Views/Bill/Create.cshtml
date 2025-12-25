@@ -1,0 +1,101 @@
+﻿@model Bill
+@{
+    ViewData["Title"] = "Create Bill";
+}
+
+<div class="container mt-4">
+    <h2>Create New Bill</h2>
+    <form method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label>Customer</label>
+                    <select name="CusId" class="form-control" required>
+                        <option value="">Select Customer</option>
+                        @foreach (var customer in (IEnumerable<Customer>)ViewBag.Customers)
+                        {
+                            <option value="@customer.CusId">@customer.CusName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group mb-3">
+                    <label>Employee</label>
+                    <select name="EmpId" class="form-control" required>
+                        <option value="">Select Employee</option>
+                        @foreach (var employee in (IEnumerable<Employee>)ViewBag.Employees)
+                        {
+                            <option value="@employee.EmployeeId">@employee.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mt-4">Add Medicines</h4>
+        <div id="medicinesContainer">
+            <div class="medicine-row mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <select class="form-control medicine-select" name="MedicineIds">
+                            <option value="">Select Medicine</option>
+                            @foreach (var medicine in (IEnumerable<Medicine>)ViewBag.Medicines)
+                            {
+                                <option value="@medicine.MedicineId">@medicine.Name (Stock: @medicine.Quantity)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" class="form-control medicine-qty" name="Quantities" placeholder="Qty" min="1" />
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-danger remove-medicine">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-info mb-3" id="addMedicineBtn">+ Add More Medicines</button>
+
+        <div class="form-group mb-3 mt-4">
+            <label><strong>Total Amount: Rs. <span id="totalAmount">0</span></strong></label>
+        </div>
+
+        <button type="submit" class="btn btn-success btn-lg">Create Bill</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">Cancel</a>
+    </form>
+</div>
+
+<script>
+    // Add more medicine rows
+    document.getElementById('addMedicineBtn').addEventListener('click', function() {
+        const container = document.getElementById('medicinesContainer');
+        const newRow = document.querySelector('.medicine-row').cloneNode(true);
+        newRow.querySelector('.medicine-select').value = '';
+        newRow.querySelector('.medicine-qty').value = '';
+        container.appendChild(newRow);
+        attachRemoveListener(newRow);
+    });
+
+    // Remove medicine row
+    function attachRemoveListener(row) {
+        row.querySelector('.remove-medicine').addEventListener('click', function() {
+            row.remove();
+            calculateTotal();
+        });
+    }
+
+    document.querySelectorAll('.remove-medicine').forEach(attachRemoveListener);
+
+    // Calculate total
+    function calculateTotal() {
+        let total = 0;
+        document.querySelectorAll('.medicine-row').forEach(row => {
+            const medicineId = row.querySelector('.medicine-select').value;
+            const qty = parseInt(row.querySelector('.medicine-qty').value) || 0;
+            // Calculate total based on medicine price
+        });
+        document.getElementById('totalAmount').textContent = total;
+    }
+</script>

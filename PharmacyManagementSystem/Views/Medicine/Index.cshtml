@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Medicine>
+@{
+    ViewData["Title"] = "Medicines";
+}
+
+<div class="container mt-4">
+    <h2>Medicine Stock</h2>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by name, category..." />
+        </div>
+        <div class="col-md-6">
+            <a href="@Url.Action("Create")" class="btn btn-success">Add Medicine</a>
+        </div>
+    </div>
+
+    <table class="table table-striped" id="medicineTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var medicine in Model)
+            {
+                var badge = ViewBag.Badges.ContainsKey(medicine.MedicineId)
+                ? (PharmacyManagementSystem.Services.MedicineBadge)ViewBag.Badges[medicine.MedicineId]
+                : null;
+
+                <tr class="medicine-row">
+                    <td>@medicine.Name</td>
+                    <td>@medicine.Category</td>
+                    <td>@medicine.Quantity</td>
+                    <td>Rs. @medicine.SalePrice</td>
+                    <td>
+                        @if (badge != null && badge.Status != "NORMAL")
+                        {
+                            <span class="badge bg-@badge.BadgeColor">@badge.Status</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = medicine.MedicineId })" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="@Url.Action("Delete", new { id = medicine.MedicineId })" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('.medicine-row');
+
+        rows.forEach(row => {
+            const name = row.cells[0].textContent.toLowerCase();
+            const category = row.cells[1].textContent.toLowerCase();
+
+            if (name.includes(searchValue) || category.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>

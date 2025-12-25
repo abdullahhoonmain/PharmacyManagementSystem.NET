@@ -1,0 +1,68 @@
+﻿-- Views/Medicine/Create.cshtml -->
+@model Medicine
+@{
+    ViewData["Title"] = "Add Medicine";
+}
+
+<div class="container mt-4">
+    <h2>Add New Medicine</h2>
+
+    <form method="post">
+        <div class="form-group mb-3">
+            <label>Medicine Name</label>
+            <input type="text" name="Name" class="form-control" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Category</label>
+            <select name="Category" class="form-control" required>
+                <option value="">Select Category</option>
+                <option value="Tablet">Tablet</option>
+                <option value="Capsule">Capsule</option>
+                <option value="Injection">Injection</option>
+
+                <option value="Syrup">Syrup</option>
+                <option value="Machine">Machine</option>
+                <option value="Cosmetics">Cosmetics</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Batch No</label>
+            <input type="text" name="BatchNo" class="form-control" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Expiry Date</label>
+            <input type="date" name="ExpiryDate" class="form-control" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Purchase Price</label>
+            <input type="number" name="PurchasePrice" step="0.01" class="form-control" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Sale Price</label>
+            <input type="number" name="SalePrice" step="0.01" class="form-control" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Quantity</label>
+            <input type="number" name="Quantity" class="form-control" required />
+        </div>
+
+        <div class="form-group mb-3">
+            <label>Supplier ID (Optional)</label>
+            <input type="number" name="SupplierId" class="form-control" />
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+---
+
+

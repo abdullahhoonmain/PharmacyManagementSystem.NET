@@ -1,0 +1,28 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Add Employee";
+}
+<div class="container mt-4">
+    <h2>Add New Employee</h2>
+    <form method="post">
+        <div class="form-group mb-3">
+            <label>Name</label>
+            <input type="text" name="Name" class="form-control" required />
+        </div>
+        <div class="form-group mb-3">
+            <label>Role</label>
+            <select name="Role" class="form-control" required>
+                <option value="">Select Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Pharmacist">Pharmacist</option>
+                <option value="Cashier">Cashier</option>
+            </select>
+        </div>
+        <div class="form-group mb-3">
+            <label>Phone</label>
+            <input type="text" name="Phone" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
